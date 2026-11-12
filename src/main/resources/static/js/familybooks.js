@@ -10,9 +10,10 @@
   }
 
   const siteNav = document.querySelector(".site-nav");
-  if (siteNav && document.body.classList.contains("page-home")) {
+  if (siteNav) {
+    const isHome = document.body.classList.contains("page-home");
     const syncNav = function () {
-      if (window.scrollY > 40) {
+      if (!isHome || window.scrollY > 24) {
         siteNav.classList.add("is-solid");
       } else {
         siteNav.classList.remove("is-solid");
