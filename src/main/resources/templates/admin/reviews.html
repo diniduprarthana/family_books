@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head(${pageTitle})}"></head>
+<body class="site-shell"
+      th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
+<div class="admin-layout">
+    <aside th:replace="~{admin/layout-admin :: sidebar}"></aside>
+    <main class="admin-content">
+        <h1 class="section-title" style="font-size:2.2rem;">Reviews</h1>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead><tr><th>Book</th><th>Reviewer</th><th>Rating</th><th>Text</th><th>Actions</th></tr></thead>
+                <tbody>
+                <tr th:each="review : ${reviews}">
+                    <td th:text="${bookTitles.get(review.bookId)}">Book</td>
+                    <td th:text="${userNames.get(review.userId)}">User</td>
+                    <td th:text="${review.rating}">5</td>
+                    <td th:text="${review.reviewText}">text</td>
+                    <td>
+                        <form th:action="@{/admin/reviews/{id}/delete(id=${review.id})}" method="post">
+                            <button class="btn btn-sm btn-danger" type="submit" data-confirm="Delete this review?">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

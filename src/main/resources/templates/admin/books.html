@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head(${pageTitle})}"></head>
+<body class="site-shell"
+      th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
+<div class="admin-layout">
+    <aside th:replace="~{admin/layout-admin :: sidebar}"></aside>
+    <main class="admin-content">
+        <div class="toolbar">
+            <div>
+                <h1 class="section-title" style="font-size:2.2rem;margin:0;">Books</h1>
+                <p class="section-lead" style="margin:0.4rem 0 0;">Create, edit, and remove catalogue titles.</p>
+            </div>
+            <a th:href="@{/admin/books/new}" class="btn btn-dark">Add book</a>
+        </div>
+        <form method="get" th:action="@{/admin/books}" class="toolbar">
+            <input class="form-control" style="max-width:320px;" name="q" th:value="${q}" placeholder="Search books"/>
+            <button class="btn btn-outline" style="color:var(--espresso);" type="submit">Search</button>
+        </form>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>Title</th><th>Author</th><th>Type</th><th>Price</th><th>Availability</th><th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.title}">Title</td>
+                    <td th:text="${book.author}">Author</td>
+                    <td th:text="${book.bookType}">Type</td>
+                    <td th:text="'LKR ' + ${#numbers.formatDecimal(book.price,1,2)}">Price</td>
+                    <td th:text="${book.availabilityDescription}">Avail</td>
+                    <td style="white-space:nowrap;">
+                        <a class="btn btn-sm btn-outline" style="color:var(--espresso);"
+                           th:href="@{/admin/books/{id}/edit(id=${book.id})}">Edit</a>
+                        <form th:action="@{/admin/books/{id}/delete(id=${book.id})}" method="post" style="display:inline;">
+                            <button class="btn btn-sm btn-danger" type="submit" data-confirm="Delete this book and its reviews?">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head(${pageTitle})}"></head>
+<body class="site-shell"
+      th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
+<header th:replace="~{layout :: navbar}"></header>
+<main class="site-main section">
+    <div class="container">
+        <p class="section-eyebrow">Catalogue</p>
+        <h1 class="section-title">Book Collection</h1>
+        <p class="section-lead">Search, filter, and sort the Family Books shelves.</p>
+
+        <form method="get" th:action="@{/books}" class="toolbar" style="align-items:flex-end;">
+            <div style="display:flex;flex-wrap:wrap;gap:0.75rem;flex:1;">
+                <div class="form-group" style="margin:0;min-width:220px;flex:1;">
+                    <label for="q">Search</label>
+                    <input class="form-control" id="q" name="q" th:value="${q}" placeholder="Title, author, ISBN"/>
+                </div>
+                <div class="form-group" style="margin:0;min-width:180px;">
+                    <label for="category">Category</label>
+                    <select class="form-control" id="category" name="category">
+                        <option value="">All categories</option>
+                        <option th:each="c : ${categories}"
+                                th:value="${c.id}"
+                                th:selected="${c.id == selectedCategory}"
+                                th:text="${c.name}">Fiction</option>
+                    </select>
+                </div>
+                <div class="form-group" style="margin:0;min-width:160px;">
+                    <label for="sort">Sort</label>
+                    <select class="form-control" id="sort" name="sort">
+                        <option value="title" th:selected="${sort == 'title'}">Title</option>
+                        <option value="author" th:selected="${sort == 'author'}">Author</option>
+                        <option value="price_asc" th:selected="${sort == 'price_asc'}">Price ↑</option>
+                        <option value="price_desc" th:selected="${sort == 'price_desc'}">Price ↓</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark">Apply</button>
+        </form>
+
+        <p style="color:var(--mocha);margin-bottom:1.25rem;"
+           th:text="${books.size()} + ' title(s) found'">0 titles</p>
+
+        <div class="book-grid" th:if="${!books.isEmpty()}">
+            <article class="book-card" th:each="book : ${books}">
+                <a th:href="@{/books/{id}(id=${book.id})}">
+                    <div class="book-cover">
+                        <img th:src="${book.coverImage}" th:alt="${book.title}"/>
+                    </div>
+                    <div class="book-body">
+                        <span class="pill" th:text="${book.bookType}">PRINTED</span>
+                        <h3 th:text="${book.title}">Title</h3>
+                        <p class="book-meta" th:text="${book.author}">Author</p>
+                        <p class="book-meta" th:text="${book.availabilityDescription}">Stock</p>
+                        <p class="book-price" th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">LKR 0</p>
+                    </div>
+                </a>
+            </article>
+        </div>
+        <div th:if="${books.isEmpty()}" class="alert">No books matched your filters.</div>
+    </div>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

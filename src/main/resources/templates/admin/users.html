@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head(${pageTitle})}"></head>
+<body class="site-shell"
+      th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
+<div class="admin-layout">
+    <aside th:replace="~{admin/layout-admin :: sidebar}"></aside>
+    <main class="admin-content">
+        <h1 class="section-title" style="font-size:2.2rem;">Users</h1>
+        <form method="get" th:action="@{/admin/users}" class="toolbar">
+            <input class="form-control" style="max-width:320px;" name="q" th:value="${q}" placeholder="Search users"/>
+            <button class="btn btn-outline" style="color:var(--espresso);" type="submit">Search</button>
+        </form>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead><tr><th>Username</th><th>Details</th><th>Role</th><th>Actions</th></tr></thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td>
+                        <strong th:text="${user.username}">user</strong><br/>
+                        <span class="book-meta" th:text="${user.id}">id</span>
+                    </td>
+                    <td>
+                        <form th:action="@{/admin/users/{id}(id=${user.id})}" method="post">
+                            <input class="form-control" name="fullName" th:value="${user.fullName}" required/>
+                            <input class="form-control" style="margin-top:0.4rem;" type="email" name="email" th:value="${user.email}" required/>
+                            <select class="form-control" style="margin-top:0.4rem;" name="role">
+                                <option value="CUSTOMER" th:selected="${user.role.name() == 'CUSTOMER'}">CUSTOMER</option>
+                                <option value="ADMIN" th:selected="${user.role.name() == 'ADMIN'}">ADMIN</option>
+                            </select>
+                            <button class="btn btn-sm btn-dark" style="margin-top:0.4rem;" type="submit">Update</button>
+                        </form>
+                    </td>
+                    <td th:text="${user.role}">CUSTOMER</td>
+                    <td>
+                        <form th:action="@{/admin/users/{id}/delete(id=${user.id})}" method="post">
+                            <button class="btn btn-sm btn-danger" type="submit" data-confirm="Delete this user and their reviews?">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

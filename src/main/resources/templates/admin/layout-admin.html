@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<aside th:fragment="sidebar" class="admin-sidebar">
+    <div style="padding:0.5rem 0.9rem 1.25rem;">
+        <div class="brand-name" style="font-size:1.35rem;">Family Books</div>
+        <div class="brand-tag">Admin Console</div>
+    </div>
+    <a th:href="@{/admin/dashboard}" th:classappend="${adminSection == 'overview'} ? ' active'">Overview</a>
+    <a th:href="@{/admin/books}" th:classappend="${adminSection == 'books'} ? ' active'">Books</a>
+    <a th:href="@{/admin/categories}" th:classappend="${adminSection == 'categories'} ? ' active'">Categories</a>
+    <a th:href="@{/admin/users}" th:classappend="${adminSection == 'users'} ? ' active'">Users</a>
+    <a th:href="@{/admin/reviews}" th:classappend="${adminSection == 'reviews'} ? ' active'">Reviews</a>
+    <a th:href="@{/}" style="margin-top:1.5rem;">← Storefront</a>
+</aside>
+</body>
+</html>

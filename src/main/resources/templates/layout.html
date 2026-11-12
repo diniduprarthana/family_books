@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="en">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title th:text="${title} + ' · Family Books'">Family Books</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              espresso: '#241914',
+              walnut: '#493326',
+              gold: '#B69A70',
+              parchment: '#F1E7D5',
+              mocha: '#816957'
+            },
+            fontFamily: {
+              serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+              sans: ['Manrope', 'Segoe UI', 'sans-serif']
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" th:href="@{/css/familybooks.css}"/>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body th:fragment="body-open" class="site-shell"
+      th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
+</body>
+
+<header th:fragment="navbar" class="site-nav">
+    <div class="nav-inner">
+        <a th:href="@{/}" class="brand" aria-label="Family Books home">
+            <span class="brand-mark">FB</span>
+            <span class="brand-text">
+                <span class="brand-name">Family Books</span>
+                <span class="brand-tag">Every Story Feels Like Home</span>
+            </span>
+        </a>
+        <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+        <nav class="nav-links" id="navLinks" aria-label="Primary">
+            <a th:href="@{/}" th:classappend="${pageTitle == 'Home'} ? ' active'">Home</a>
+            <a th:href="@{/books}" th:classappend="${pageTitle == 'Collection'} ? ' active'">Collection</a>
+            <a th:href="@{/about}" th:classappend="${pageTitle == 'About'} ? ' active'">About</a>
+            <a th:href="@{/profile}" sec:authorize="isAuthenticated()">Profile</a>
+            <a th:href="@{/admin/dashboard}" sec:authorize="hasRole('ADMIN')">Admin</a>
+            <a th:href="@{/login}" sec:authorize="!isAuthenticated()">Sign In</a>
+            <a th:href="@{/register}" sec:authorize="!isAuthenticated()" class="btn btn-primary btn-sm">Join</a>
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" style="display:inline;">
+                <button type="submit" class="btn btn-ghost btn-sm">Sign Out</button>
+            </form>
+        </nav>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="site-footer">
+    <div class="container footer-grid">
+        <div>
+            <h3>Family Books</h3>
+            <p>A heritage bookstore for readers who believe every home deserves a quiet shelf of stories.</p>
+        </div>
+        <div>
+            <h3>Explore</h3>
+            <p><a th:href="@{/books}">Book Collection</a></p>
+            <p><a th:href="@{/about}">Our Story</a></p>
+            <p><a th:href="@{/register}">Create Account</a></p>
+        </div>
+        <div>
+            <h3>Visit</h3>
+            <p>Academic project · SE1020 OOP</p>
+            <p>SLIIT · Online Bookstore Management System</p>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        © <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Family Books. Crafted for SE1020.
+    </div>
+</footer>
+
+<div th:fragment="scripts">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script th:src="@{/js/familybooks.js}"></script>
+    <script>lucide.createIcons();</script>
+</div>
+</html>

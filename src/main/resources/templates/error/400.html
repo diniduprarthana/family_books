@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head('Bad Request')}"></head>
+<body class="site-shell">
+<header th:replace="~{layout :: navbar}"></header>
+<main class="site-main section">
+    <div class="container" style="text-align:center;max-width:640px;">
+        <p class="section-eyebrow">Notice</p>
+        <h1 class="section-title">Unable to complete request</h1>
+        <p class="section-lead" th:text="${message} ?: 'Please check your input and try again.'">Bad request</p>
+        <a th:href="@{/}" class="btn btn-dark">Return home</a>
+    </div>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

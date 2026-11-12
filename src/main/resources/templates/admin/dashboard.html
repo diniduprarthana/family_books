@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head(${pageTitle})}"></head>
+<body class="site-shell"
+      th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
+<div class="admin-layout">
+    <aside th:replace="~{admin/layout-admin :: sidebar}"></aside>
+    <main class="admin-content">
+        <h1 class="section-title" style="font-size:2.4rem;">Dashboard</h1>
+        <p class="section-lead">Live statistics from text-file storage.</p>
+        <div class="stat-grid">
+            <div class="stat-card"><span>Books</span><strong th:text="${bookCount}">0</strong></div>
+            <div class="stat-card"><span>Users</span><strong th:text="${userCount}">0</strong></div>
+            <div class="stat-card"><span>Categories</span><strong th:text="${categoryCount}">0</strong></div>
+            <div class="stat-card"><span>Reviews</span><strong th:text="${reviewCount}">0</strong></div>
+        </div>
+
+        <div class="admin-two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:2rem;">
+            <section>
+                <h2>Recent books</h2>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead><tr><th>Title</th><th>Type</th><th>Availability</th></tr></thead>
+                        <tbody>
+                        <tr th:each="book : ${recentBooks}">
+                            <td th:text="${book.title}">Title</td>
+                            <td th:text="${book.bookType}">Type</td>
+                            <td th:text="${book.availabilityDescription}">Avail</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            <section>
+                <h2>Low stock (printed)</h2>
+                <div class="table-wrap">
+                    <table class="data-table">
+                        <thead><tr><th>Title</th><th>Stock</th></tr></thead>
+                        <tbody>
+                        <tr th:each="book : ${lowStockBooks}">
+                            <td th:text="${book.title}">Title</td>
+                            <td th:text="${book.stockQuantity}">0</td>
+                        </tr>
+                        <tr th:if="${lowStockBooks.isEmpty()}"><td colspan="2">No low-stock printed books.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <section style="margin-top:2rem;">
+            <h2>Recent reviews</h2>
+            <div class="table-wrap">
+                <table class="data-table">
+                    <thead><tr><th>Book</th><th>Rating</th><th>Text</th></tr></thead>
+                    <tbody>
+                    <tr th:each="review : ${recentReviews}">
+                        <td th:text="${review.bookId}">BK</td>
+                        <td th:text="${review.rating}">5</td>
+                        <td th:text="${review.reviewText}">text</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</div>
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>

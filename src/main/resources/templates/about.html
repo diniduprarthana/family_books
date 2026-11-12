@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout :: head(${pageTitle})}"></head>
+<body class="site-shell">
+<header th:replace="~{layout :: navbar}"></header>
+<main class="site-main">
+    <section class="section section-dark" style="padding-top:5rem;">
+        <div class="container">
+            <p class="section-eyebrow">Our Story</p>
+            <h1 class="section-title" style="color:var(--parchment);">Family Books</h1>
+            <p class="section-lead">Every Story Feels Like Home.</p>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container" style="max-width:760px;">
+            <h2>A heritage reading room for the digital age</h2>
+            <p>Family Books was imagined as the kind of bookstore you remember from childhood visits with parents — warm wood, quiet corners, and covers that invite you to stay a little longer. This online system carries that atmosphere into a polished web experience while remaining academically rigorous.</p>
+            <p>Built for SE1020 Object Oriented Programming at SLIIT, the platform demonstrates encapsulation, inheritance, polymorphism, abstraction, and information hiding through a clean Spring Boot architecture with text-file persistence.</p>
+            <h3>What you can do here</h3>
+            <ul>
+                <li>Browse a curated collection of printed books and e-books</li>
+                <li>Register securely and manage your profile</li>
+                <li>Leave thoughtful reviews on titles you love</li>
+                <li>Administer catalogue, categories, users, and reviews (admin)</li>
+            </ul>
+        </div>
+    </section>
+</main>
+<footer th:replace="~{layout :: footer}"></footer>
+<div th:replace="~{layout :: scripts}"></div>
+</body>
+</html>
