@@ -1,0 +1,42 @@
+# Build
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Maven wrapper local
+.mvn/wrapper/maven-wrapper.jar
+
+# Runtime data overrides (keep sample seed files tracked)
+# Uncomment if you want local-only data:
+# data/users.txt
+# data/books.txt
+# data/categories.txt
+# data/reviews.txt
+
+# Secrets / env
+.env
+*.env
+credentials.*
+application-local.properties
+
+# Test temp
+tmp/
+temp/
+*.tmp
