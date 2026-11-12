@@ -102,12 +102,17 @@ Results should be recorded from an actual local run (do not fabricate).
 
 Family Books meets the academic scope: four CRUD modules, strong OOP demonstration, real file persistence, secure authentication, and a presentation-ready bookstore interface. The backend remains explainable for an undergraduate viva.
 
-## 13. Git history
+## 13. Git history (actual)
 
-Record actual commits after repository initialization. Example workflow:
-
-```bash
-git log --oneline
+```
+6b555e0 Add academic documentation, class diagram, and viva study guide.
+4fc2e24 Add CRUD integration tests and seedable text-file data store.
+62e3b55 Build premium vintage Thymeleaf UI for public and admin pages.
+ac96303 Wire MVC controllers for storefront, auth, reviews, and admin CRUD.
+f410e8b Add services, Spring Security, and demo data initialization.
+7467fdc Implement file-based repositories with UTF-8 persistence helpers.
+852202d Add domain models with Book inheritance and custom exceptions.
+bff81b1 Initialize Spring Boot Family Books project foundation.
 ```
 
-Paste the real history into submissions; never invent commits.
+Refresh with `git log --oneline` before submission if more commits are added.
