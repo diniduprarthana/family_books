@@ -1,47 +1,61 @@
-# Build
+# Build output
 target/
 *.class
 *.jar
 *.war
 *.ear
 *.log
+hs_err_pid*
+replay_pid*
 
-# IDE
+# Maven Wrapper (project uses globally installed Maven)
+.mvn/
+mvnw
+mvnw.cmd
+
+# IDE — IntelliJ IDEA / Eclipse / VS Code
 .idea/
 *.iml
 *.ipr
 *.iws
+.project
+.classpath
+.settings/
 .vscode/
 *.swp
 *~
 
-# OS
+# OS junk
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Maven wrapper local
-.mvn/wrapper/maven-wrapper.jar
+# Draw.io local lock/backup files
+**/.$*.drawio.bkp
+**/*.drawio.bkp
 
-# Runtime data overrides (keep sample seed files tracked)
-# Uncomment if you want local-only data:
-# data/users.txt
-# data/books.txt
-# data/categories.txt
-# data/reviews.txt
+# Local temp / test artifacts
+tmp/
+temp/
+*.tmp
+tmp-*.txt
+tmp-*.jpg
+tmp-cookies.txt
 
 # Admin-uploaded book covers (persist locally; do not commit binaries)
 data/uploads/**
 !data/uploads/books/
 !data/uploads/books/.gitkeep
 
-# Secrets / env
+# Secrets / local overrides
 .env
 *.env
 credentials.*
 application-local.properties
 
-# Test temp
-tmp/
-temp/
-*.tmp
+# Runtime data overrides (keep sample seed files tracked by default)
+# Uncomment if you want local-only data:
+# data/users.txt
+# data/books.txt
+# data/categories.txt
+# data/reviews.txt

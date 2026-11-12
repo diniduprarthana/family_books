@@ -81,10 +81,10 @@ class CrudServiceIntegrationTest {
         Category fiction = categoryService.create("Fiction", "Stories");
         PrintedBook printed = (PrintedBook) bookService.createPrinted(
                 "Quiet Shelf", "A. Author", "978111", fiction.getId(),
-                "A printed novel", new BigDecimal("1500"), "/images/covers/placeholder.svg", 5, 220);
+                "A printed novel", new BigDecimal("1500"), "/images/books/placeholder.jpg", 5, 220);
         EBook ebook = (EBook) bookService.createEBook(
                 "Digital Shelf", "B. Author", "978222", fiction.getId(),
-                "An ebook", new BigDecimal("900"), "/images/covers/placeholder.svg", "EPUB", "Immediate");
+                "An ebook", new BigDecimal("900"), "/images/books/placeholder.jpg", "EPUB", "Immediate");
 
         assertEquals("PRINTED", printed.getBookType());
         assertTrue(printed.getAvailabilityDescription().contains("stock")
