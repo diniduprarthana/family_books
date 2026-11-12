@@ -100,7 +100,7 @@
 
     if (window.ScrollTrigger) {
       gsap.utils.toArray(".reveal").forEach(function (section) {
-        const bits = section.querySelectorAll(".section-head, .book-card, .collection-tile, .feature-visual, blockquote");
+        const bits = section.querySelectorAll(".section-head, .book-card, .mood-card, .feature-visual, blockquote");
         if (!bits.length) {
           return;
         }
@@ -141,5 +141,73 @@
     };
     bookType.addEventListener("change", syncTypeFields);
     syncTypeFields();
+  }
+
+  const coverUpload = document.querySelector(".cover-upload");
+  if (coverUpload) {
+    const preview = document.getElementById("coverPreview");
+    const fileInput = document.getElementById("coverFile");
+    const removeBtn = document.getElementById("coverRemove");
+    const removeFlag = document.getElementById("removeCover");
+    const status = document.getElementById("coverStatus");
+    const defaultCover = coverUpload.dataset.defaultCover || "/images/books/placeholder.jpg";
+    const currentCover = coverUpload.dataset.currentCover || defaultCover;
+    const maxBytes = 5 * 1024 * 1024;
+    const allowed = ["image/jpeg", "image/png", "image/webp"];
+    let objectUrl = null;
+
+    const setStatus = function (message, kind) {
+      if (!status) return;
+      status.textContent = message || "";
+      status.classList.remove("is-error", "is-ok");
+      if (kind) status.classList.add(kind);
+    };
+
+    const revokePreviewUrl = function () {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+        objectUrl = null;
+      }
+    };
+
+    if (fileInput) {
+      fileInput.addEventListener("change", function () {
+        const file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+
+        if (allowed.indexOf(file.type) === -1) {
+          fileInput.value = "";
+          setStatus("Please choose a JPG, PNG, or WebP image.", "is-error");
+          return;
+        }
+        if (file.size > maxBytes) {
+          fileInput.value = "";
+          setStatus("Image must be 5 MB or smaller.", "is-error");
+          return;
+        }
+
+        revokePreviewUrl();
+        objectUrl = URL.createObjectURL(file);
+        if (preview) preview.src = objectUrl;
+        if (removeFlag) removeFlag.value = "false";
+        setStatus("New cover selected — save the book to apply it.", "is-ok");
+      });
+    }
+
+    if (removeBtn) {
+      removeBtn.addEventListener("click", function () {
+        revokePreviewUrl();
+        if (fileInput) fileInput.value = "";
+        if (preview) preview.src = defaultCover;
+        if (removeFlag) removeFlag.value = "true";
+        setStatus("Cover will reset to the default placeholder on save.", "is-ok");
+      });
+    }
+
+    window.addEventListener("beforeunload", revokePreviewUrl);
+
+    if (preview && (!preview.getAttribute("src") || preview.getAttribute("src") === "")) {
+      preview.src = currentCover;
+    }
   }
 })();

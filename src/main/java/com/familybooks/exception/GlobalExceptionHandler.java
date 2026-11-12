@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Maps application exceptions to user-friendly error pages.
@@ -40,6 +43,12 @@ public class GlobalExceptionHandler {
         ModelAndView mav = new ModelAndView("error/400");
         mav.addObject("message", ex.getMessage());
         return mav;
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public RedirectView handleUploadTooLarge(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMessage", "Cover image must be 5 MB or smaller.");
+        return new RedirectView("/admin/books", true);
     }
 
     @ExceptionHandler(Exception.class)

@@ -8,7 +8,11 @@
     <main class="admin-content">
         <h1 class="section-title" style="font-size:2.2rem;" th:text="${book != null} ? 'Edit Book' : 'Add Book'">Book</h1>
         <form th:action="${book != null} ? @{/admin/books/{id}(id=${book.id})} : @{/admin/books}"
-              method="post" class="form-panel" style="max-width:720px;margin:0;">
+              method="post"
+              enctype="multipart/form-data"
+              class="form-panel"
+              style="max-width:720px;margin:0;"
+              id="bookForm">
             <div class="form-group">
                 <label for="title">Title</label>
                 <input class="form-control" id="title" name="title" required
@@ -41,11 +45,34 @@
                 <input class="form-control" type="number" step="0.01" min="0" id="price" name="price" required
                        th:value="${book != null ? book.price : ''}"/>
             </div>
-            <div class="form-group">
-                <label for="coverImage">Cover image path</label>
-                <input class="form-control" id="coverImage" name="coverImage"
-                       th:value="${book != null ? book.coverImage : '/images/books/placeholder.jpg'}"/>
+
+            <div class="form-group cover-upload"
+                 th:attr="data-default-cover=${defaultCover},
+                          data-current-cover=${book != null ? book.coverImage : defaultCover}">
+                <label>Cover image</label>
+                <div class="cover-upload__frame">
+                    <img id="coverPreview"
+                         class="cover-upload__preview"
+                         th:src="${book != null ? book.coverImage : defaultCover}"
+                         alt="Book cover preview"/>
+                    <div class="cover-upload__veil">
+                        <span class="cover-upload__hint">JPG, PNG, or WebP · max 5 MB</span>
+                    </div>
+                </div>
+                <div class="cover-upload__actions">
+                    <label class="btn btn-dark cover-upload__choose" for="coverFile">Choose Image</label>
+                    <input type="file"
+                           id="coverFile"
+                           name="coverFile"
+                           accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp"
+                           hidden/>
+                    <button type="button" class="btn btn-outline cover-upload__remove" id="coverRemove"
+                            style="color:var(--espresso);">Remove Image</button>
+                </div>
+                <p class="cover-upload__status" id="coverStatus" aria-live="polite"></p>
+                <input type="hidden" name="removeCover" id="removeCover" value="false"/>
             </div>
+
             <div class="form-group">
                 <label for="bookType">Book type</label>
                 <select class="form-control" id="bookType" name="bookType">

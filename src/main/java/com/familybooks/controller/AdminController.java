@@ -2,6 +2,7 @@ package com.familybooks.controller;
 
 import com.familybooks.model.Book;
 import com.familybooks.model.UserRole;
+import com.familybooks.service.BookCoverStorageService;
 import com.familybooks.service.BookService;
 import com.familybooks.service.CategoryService;
 import com.familybooks.service.ReviewService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
@@ -27,15 +29,18 @@ public class AdminController {
     private final CategoryService categoryService;
     private final UserService userService;
     private final ReviewService reviewService;
+    private final BookCoverStorageService bookCoverStorageService;
 
     public AdminController(BookService bookService,
                            CategoryService categoryService,
                            UserService userService,
-                           ReviewService reviewService) {
+                           ReviewService reviewService,
+                           BookCoverStorageService bookCoverStorageService) {
         this.bookService = bookService;
         this.categoryService = categoryService;
         this.userService = userService;
         this.reviewService = reviewService;
+        this.bookCoverStorageService = bookCoverStorageService;
     }
 
     @GetMapping({"", "/", "/dashboard"})
@@ -67,6 +72,7 @@ public class AdminController {
     @GetMapping("/books/new")
     public String newBookForm(Model model) {
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("defaultCover", BookCoverStorageService.PLACEHOLDER);
         model.addAttribute("pageTitle", "Add Book");
         model.addAttribute("adminSection", "books");
         return "admin/book-form";
@@ -79,14 +85,19 @@ public class AdminController {
                              @RequestParam String categoryId,
                              @RequestParam String description,
                              @RequestParam BigDecimal price,
-                             @RequestParam(required = false) String coverImage,
+                             @RequestParam(required = false) MultipartFile coverFile,
+                             @RequestParam(required = false, defaultValue = "false") boolean removeCover,
                              @RequestParam String bookType,
                              @RequestParam(required = false) Integer stockQuantity,
                              @RequestParam(required = false) Integer pageCount,
                              @RequestParam(required = false) String digitalFormat,
                              @RequestParam(required = false) String downloadAccess,
                              RedirectAttributes redirectAttributes) {
+        String storedCover = null;
         try {
+            String coverImage = resolveNewCover(coverFile, removeCover);
+            storedCover = bookCoverStorageService.isManagedUpload(coverImage) ? coverImage : null;
+
             if ("EBOOK".equalsIgnoreCase(bookType)) {
                 bookService.createEBook(title, author, isbn, categoryId, description, price,
                         coverImage, digitalFormat, downloadAccess);
@@ -98,6 +109,9 @@ public class AdminController {
             }
             redirectAttributes.addFlashAttribute("successMessage", "Book created successfully.");
         } catch (RuntimeException ex) {
+            if (storedCover != null) {
+                bookCoverStorageService.deleteUploadFile(storedCover);
+            }
             redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
             return "redirect:/admin/books/new";
         }
@@ -109,6 +123,7 @@ public class AdminController {
         Book book = bookService.getById(id);
         model.addAttribute("book", book);
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("defaultCover", BookCoverStorageService.PLACEHOLDER);
         model.addAttribute("pageTitle", "Edit Book");
         model.addAttribute("adminSection", "books");
         return "admin/book-form";
@@ -122,18 +137,36 @@ public class AdminController {
                              @RequestParam String categoryId,
                              @RequestParam String description,
                              @RequestParam BigDecimal price,
-                             @RequestParam(required = false) String coverImage,
+                             @RequestParam(required = false) MultipartFile coverFile,
+                             @RequestParam(required = false, defaultValue = "false") boolean removeCover,
                              @RequestParam String bookType,
                              @RequestParam(required = false) Integer stockQuantity,
                              @RequestParam(required = false) Integer pageCount,
                              @RequestParam(required = false) String digitalFormat,
                              @RequestParam(required = false) String downloadAccess,
                              RedirectAttributes redirectAttributes) {
+        String storedCover = null;
+        String previousCover = null;
         try {
+            Book existing = bookService.getById(id);
+            previousCover = existing.getCoverImage();
+            String coverImage = resolveUpdatedCover(previousCover, coverFile, removeCover);
+            if (bookCoverStorageService.isManagedUpload(coverImage)
+                    && !coverImage.equals(previousCover)) {
+                storedCover = coverImage;
+            }
+
             bookService.update(id, title, author, isbn, categoryId, description, price, coverImage,
                     bookType, stockQuantity, pageCount, digitalFormat, downloadAccess);
+
+            if (previousCover != null && !previousCover.equals(coverImage)) {
+                bookCoverStorageService.deleteIfUnusedUpload(previousCover);
+            }
             redirectAttributes.addFlashAttribute("successMessage", "Book updated successfully.");
         } catch (RuntimeException ex) {
+            if (storedCover != null) {
+                bookCoverStorageService.deleteUploadFile(storedCover);
+            }
             redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
             return "redirect:/admin/books/" + id + "/edit";
         }
@@ -143,12 +176,35 @@ public class AdminController {
     @PostMapping("/books/{id}/delete")
     public String deleteBook(@PathVariable String id, RedirectAttributes redirectAttributes) {
         try {
+            Book book = bookService.getById(id);
+            String coverImage = book.getCoverImage();
             bookService.delete(id);
+            bookCoverStorageService.deleteIfUnusedUpload(coverImage);
             redirectAttributes.addFlashAttribute("successMessage", "Book deleted.");
         } catch (RuntimeException ex) {
             redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
         }
         return "redirect:/admin/books";
+    }
+
+    private String resolveNewCover(MultipartFile coverFile, boolean removeCover) {
+        if (removeCover || coverFile == null || coverFile.isEmpty()) {
+            return BookCoverStorageService.PLACEHOLDER;
+        }
+        return bookCoverStorageService.store(coverFile);
+    }
+
+    private String resolveUpdatedCover(String existingCover, MultipartFile coverFile, boolean removeCover) {
+        if (removeCover) {
+            return BookCoverStorageService.PLACEHOLDER;
+        }
+        if (coverFile != null && !coverFile.isEmpty()) {
+            return bookCoverStorageService.store(coverFile);
+        }
+        if (existingCover == null || existingCover.isBlank()) {
+            return BookCoverStorageService.PLACEHOLDER;
+        }
+        return existingCover;
     }
 
     // ---------- Categories ----------

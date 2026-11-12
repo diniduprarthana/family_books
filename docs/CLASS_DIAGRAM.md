@@ -2,6 +2,10 @@
 
 This diagram matches the implemented source code (models, repositories, services, security adapter).
 
+## Editable draw.io diagram
+
+Open [family-books-class-diagram.drawio](./family-books-class-diagram.drawio) in [draw.io](https://app.diagrams.net/) to view or edit the visual class diagram.
+
 ## Mermaid UML
 
 ```mermaid

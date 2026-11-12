@@ -30,6 +30,11 @@ desktop.ini
 # data/categories.txt
 # data/reviews.txt
 
+# Admin-uploaded book covers (persist locally; do not commit binaries)
+data/uploads/**
+!data/uploads/books/
+!data/uploads/books/.gitkeep
+
 # Secrets / env
 .env
 *.env

@@ -26,6 +26,17 @@ public class HomeController {
             "CAT-CHILDREN", "/images/categories/children.jpg"
     );
 
+    private static final Map<String, String> CATEGORY_IMAGE_POSITIONS = Map.of(
+            "CAT-FICTION", "center 35%",
+            "CAT-NONFICTION", "center 40%",
+            "CAT-ROMANCE", "center 30%",
+            "CAT-MYSTERY", "center 25%",
+            "CAT-BIOGRAPHY", "center 20%",
+            "CAT-HISTORY", "center 45%",
+            "CAT-SCIENCE", "center 40%",
+            "CAT-CHILDREN", "center 30%"
+    );
+
     private final BookService bookService;
     private final CategoryService categoryService;
     private final ReviewService reviewService;
@@ -49,6 +60,7 @@ public class HomeController {
         model.addAttribute("recentBooks", bookService.findRecent(4));
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("categoryImages", CATEGORY_IMAGES);
+        model.addAttribute("categoryImagePositions", CATEGORY_IMAGE_POSITIONS);
         model.addAttribute("featuredRatings", ratings);
         model.addAttribute("pageTitle", "Home");
         return "home";

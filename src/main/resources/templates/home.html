@@ -19,7 +19,6 @@
                 </div>
             </div>
         </div>
-        <div class="hero-scroll">Scroll</div>
     </section>
 
     <section class="section section-ivory reveal">
@@ -59,13 +58,24 @@
                 <h2 class="section-title">Browse by Mood</h2>
                 <p class="section-lead">Step into rooms of reading — from rainy-day mysteries to family favourites.</p>
             </div>
-            <div class="collection-mosaic">
-                <a class="collection-tile" th:each="category : ${categories}"
+            <div class="mood-grid"
+                 th:with="moodCount=${#lists.size(categories)}"
+                 th:classappend="${moodCount % 4 == 3} ? ' mood-grid--featured' : ''">
+                <a class="mood-card"
+                   th:each="category : ${categories}"
                    th:href="@{/books(category=${category.id})}">
-                    <img th:src="${categoryImages.containsKey(category.id) ? categoryImages.get(category.id) : '/images/editorial/reading-corner.jpg'}"
-                         th:alt="${category.name}" loading="lazy"/>
-                    <strong th:text="${category.name}">Fiction</strong>
-                    <span th:text="${category.description}">Stories</span>
+                    <div class="mood-card__media">
+                        <img th:src="${categoryImages.containsKey(category.id) ? categoryImages.get(category.id) : '/images/editorial/reading-corner.jpg'}"
+                             th:alt="${category.name}"
+                             th:style="|object-position: ${categoryImagePositions.containsKey(category.id) ? categoryImagePositions.get(category.id) : 'center center'}|"
+                             loading="lazy"/>
+                    </div>
+                    <div class="mood-card__overlay" aria-hidden="true"></div>
+                    <div class="mood-card__body">
+                        <span class="mood-card__label">Collection</span>
+                        <h3 class="mood-card__title" th:text="${category.name}">Fiction</h3>
+                        <p class="mood-card__text" th:text="${category.description}">Stories</p>
+                    </div>
                 </a>
             </div>
         </div>
