@@ -1,0 +1,11 @@
+# Family Books data file — UTF-8 — do not edit while the app is running
+BK-0001|The Quiet Library|Eleanor Hart|9780001000001|CAT-FICTION|A luminous novel about a coastal bookshop that becomes a refuge for forgotten stories.|2450.00|/images/covers/quiet-library.svg|PRINTED|12;328
+BK-0002|Letters from Colombo|Ravi Mendis|9780001000002|CAT-NONFICTION|Warm essays on city life, monsoon mornings, and the books we inherit from home.|1890.00|/images/covers/letters-colombo.svg|PRINTED|8;256
+BK-0003|Moonlit Promises|Sofia Laurent|9780001000003|CAT-ROMANCE|Two archivists fall in love while restoring a century-old manuscript.|2100.00|/images/covers/moonlit-promises.svg|PRINTED|15;312
+BK-0004|The Galle Face Cipher|Jonas Reed|9780001000004|CAT-MYSTERY|A missing first edition draws a detective into Colombo's literary underworld.|2750.00|/images/covers/galle-face-cipher.svg|PRINTED|4;401
+BK-0005|Ink & Empire|Priya Nadesan|9780001000005|CAT-HISTORY|How printing presses reshaped identity across the Indian Ocean world.|3200.00|/images/covers/ink-empire.svg|PRINTED|6;448
+BK-0006|Starlight Botany|Dr. Helen Crowe|9780001000006|CAT-SCIENCE|A graceful introduction to plants that navigate by night and moonlight.|2650.00|/images/covers/starlight-botany.svg|PRINTED|10;288
+BK-0007|The Little Book Keeper|Maya Fonseka|9780001000007|CAT-CHILDREN|A picture-led adventure about a child who organises a magical family shelf.|1250.00|/images/covers/little-book-keeper.svg|PRINTED|20;48
+BK-0008|Portrait of a Reader|Amelia Vos|9780001000008|CAT-BIOGRAPHY|The life of a legendary bookseller who believed every home needed a reading corner.|2990.00|/images/covers/portrait-reader.svg|PRINTED|3;360
+BK-0009|Digital Hearth|Theo Lang|9780001000009|CAT-NONFICTION|Essays on building a personal library in the age of screens.|990.00|/images/covers/digital-hearth.svg|EBOOK|EPUB;Immediate
+BK-0010|Night Shelf Tales|Lina Ortega|9780001000010|CAT-FICTION|Short stories best read after midnight, delivered as a digital keepsake.|850.00|/images/covers/night-shelf.svg|EBOOK|PDF;Immediate

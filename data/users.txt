@@ -1,0 +1,4 @@
+# Family Books data file — UTF-8 — do not edit while the app is running
+USR-C7A55296|admin|admin@familybooks.lk|$2a$10$7LbmWAgM4rc1XnpmWlYqO.p9kUYB02PaIAkv9eUGamI17ZdH9y0KC|Family Books Admin|ADMIN|2026-11-12T08:52:13.180098700
+USR-9D67AD6E|amaya|amaya@example.com|$2a$10$30KUGBHiQRs7rPP2ZkuZb.7HyMqI3FhWzNCLuxw875VWHfgD91o7K|Amaya Perera|CUSTOMER|2026-11-12T08:52:13.303654700
+USR-162BFDF9|nimal|nimal@example.com|$2a$10$9XbRr7XgQQUue1S.msaADuBxMTI.kzRza7HuWko8ozpHHmoht5iA6|Nimal Silva|CUSTOMER|2026-11-12T08:52:13.374950

@@ -1,0 +1,9 @@
+# Family Books data file — UTF-8 — do not edit while the app is running
+CAT-FICTION|Fiction|Imaginative stories and literary novels.
+CAT-NONFICTION|Non-Fiction|Essays, ideas, and real-world narratives.
+CAT-ROMANCE|Romance|Love stories across eras and settings.
+CAT-MYSTERY|Mystery|Whodunits, suspense, and detective tales.
+CAT-BIOGRAPHY|Biography|Lives that shaped history and culture.
+CAT-HISTORY|History|Past worlds, empires, and turning points.
+CAT-SCIENCE|Science|Discovery, nature, and scientific thought.
+CAT-CHILDREN|Children's Books|Stories for young readers and families.
