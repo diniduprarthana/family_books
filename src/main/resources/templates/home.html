@@ -9,10 +9,10 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content hero-animate">
-                <span class="hero-kicker">Heritage Bookstore</span>
-                <h1>Family Books</h1>
+                <span class="hero-kicker">The art of getting lost in a good book</span>
+                <h1>Stories Worth Keeping.</h1>
                 <p class="hero-tagline">Every Story Feels Like Home.</p>
-                <p class="hero-copy">A modern vintage sanctuary for readers who love quiet shelves, warm light, and literature chosen with care.</p>
+                <p class="hero-copy">Discover thoughtfully curated books, timeless classics, and new literary treasures in a bookstore made for quiet evenings and lasting shelves.</p>
                 <div class="hero-actions">
                     <a th:href="@{/books}" class="btn btn-primary">Explore Collection</a>
                     <a th:href="@{/about}" class="btn btn-ghost">Our Story</a>
@@ -22,7 +22,7 @@
         <div class="hero-scroll">Scroll</div>
     </section>
 
-    <section class="section reveal">
+    <section class="section section-ivory reveal">
         <div class="container">
             <div class="section-head">
                 <p class="section-eyebrow">Featured Books</p>
@@ -30,27 +30,28 @@
                 <h2 class="section-title">On the Front Table</h2>
                 <p class="section-lead">Handpicked titles arranged like a classic bookstore table — fiction, essays, and quiet discoveries.</p>
             </div>
-            <div class="shelf-wrap">
-                <div class="book-grid">
-                    <article class="book-card" th:each="book : ${featuredBooks}">
-                        <a th:href="@{/books/{id}(id=${book.id})}">
-                            <div class="book-cover">
-                                <img th:src="${book.coverImage}" th:alt="${book.title}"/>
-                            </div>
-                            <div class="book-body">
-                                <span class="pill" th:text="${book.bookType}">PRINTED</span>
-                                <h3 th:text="${book.title}">Title</h3>
-                                <p class="book-meta" th:text="${book.author}">Author</p>
-                                <p class="book-price" th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">LKR 0.00</p>
-                            </div>
-                        </a>
-                    </article>
-                </div>
+            <div class="book-grid">
+                <article class="book-card" th:each="book : ${featuredBooks}">
+                    <a th:href="@{/books/{id}(id=${book.id})}">
+                        <div class="book-cover">
+                            <img th:src="${book.coverImage}" th:alt="${book.title}" loading="lazy"/>
+                        </div>
+                        <div class="book-body">
+                            <span class="pill" th:text="${book.bookType}">PRINTED</span>
+                            <h3 th:text="${book.title}">Title</h3>
+                            <p class="book-meta" th:text="${book.author}">Author</p>
+                            <p class="book-rating"
+                               th:if="${featuredRatings.get(book.id) != null and featuredRatings.get(book.id) > 0}"
+                               th:text="'★ ' + ${#numbers.formatDecimal(featuredRatings.get(book.id), 1, 1)}">★ 0.0</p>
+                            <p class="book-price" th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">LKR 0.00</p>
+                        </div>
+                    </a>
+                </article>
             </div>
         </div>
     </section>
 
-    <section class="section section-dark reveal">
+    <section class="section section-espresso reveal">
         <div class="container">
             <div class="section-head">
                 <p class="section-eyebrow">Curated Collections</p>
@@ -61,6 +62,8 @@
             <div class="collection-mosaic">
                 <a class="collection-tile" th:each="category : ${categories}"
                    th:href="@{/books(category=${category.id})}">
+                    <img th:src="${categoryImages.containsKey(category.id) ? categoryImages.get(category.id) : '/images/editorial/reading-corner.jpg'}"
+                         th:alt="${category.name}" loading="lazy"/>
                     <strong th:text="${category.name}">Fiction</strong>
                     <span th:text="${category.description}">Stories</span>
                 </a>
@@ -68,7 +71,22 @@
         </div>
     </section>
 
-    <section class="section reveal">
+    <section class="section section-parchment reveal">
+        <div class="container split-feature">
+            <div class="feature-visual">
+                <img src="/images/editorial/reading-corner.jpg" alt="Reading corner with stacked books" loading="lazy"/>
+            </div>
+            <div>
+                <p class="section-eyebrow">Between the Pages</p>
+                <hr class="ornament"/>
+                <h2 class="section-title">A quiet place for lasting stories</h2>
+                <p class="section-lead">Family Books was imagined as a heritage reading room for modern life — warm wood, soft light, and books chosen with care for every kind of reader at home.</p>
+                <a th:href="@{/about}" class="btn btn-dark">Discover Our Story</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-ivory reveal">
         <div class="container">
             <div class="section-head">
                 <p class="section-eyebrow">Recently Added</p>
@@ -80,7 +98,7 @@
                 <article class="book-card" th:each="book : ${recentBooks}">
                     <a th:href="@{/books/{id}(id=${book.id})}">
                         <div class="book-cover">
-                            <img th:src="${book.coverImage}" th:alt="${book.title}"/>
+                            <img th:src="${book.coverImage}" th:alt="${book.title}" loading="lazy"/>
                         </div>
                         <div class="book-body">
                             <h3 th:text="${book.title}">Title</h3>
@@ -99,7 +117,7 @@
         </div>
     </section>
 
-    <section class="section reveal">
+    <section class="section section-ivory reveal">
         <div class="container split-feature">
             <div>
                 <p class="section-eyebrow">About Family Books</p>
@@ -108,7 +126,9 @@
                 <p class="section-lead">We designed Family Books to feel like a traditional literary shop — espresso wood, parchment light, and quiet luxury — while remaining a complete, viva-ready Java system.</p>
                 <a th:href="@{/about}" class="btn btn-dark">Read Our Story</a>
             </div>
-            <div class="feature-visual" role="img" aria-label="Reading nook illustration"></div>
+            <div class="feature-visual">
+                <img src="/images/editorial/about-library.jpg" alt="Bookstore aisle lined with shelves" loading="lazy"/>
+            </div>
         </div>
     </section>
 </main>

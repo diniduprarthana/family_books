@@ -7,6 +7,7 @@
 <main class="site-main">
     <div class="auth-stage">
         <aside class="auth-visual">
+            <img src="/images/editorial/auth-books.jpg" alt="Stacked vintage books"/>
             <div>
                 <p class="section-eyebrow">Welcome back</p>
                 <h2>Family Books</h2>
@@ -16,7 +17,7 @@
         <div class="auth-form-wrap">
             <div class="form-panel" style="width:min(100%, 440px);">
                 <p class="section-eyebrow">Sign in</p>
-                <h1 style="margin-top:0;font-size:2.4rem;">Enter the library</h1>
+                <h1 style="margin-top:0;font-size:2.35rem;">Enter the library</h1>
                 <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
                 <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
                 <form th:action="@{/login}" method="post">
@@ -30,7 +31,7 @@
                     </div>
                     <button type="submit" class="btn btn-dark" style="width:100%;">Sign In</button>
                 </form>
-                <p style="margin-top:1.25rem;text-align:center;">
+                <p style="margin-top:1.2rem;text-align:center;">
                     New here? <a th:href="@{/register}" style="color:var(--walnut);text-decoration:underline;">Create an account</a>
                 </p>
             </div>

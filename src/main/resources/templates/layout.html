@@ -65,23 +65,26 @@
         <div>
             <h3>Family Books</h3>
             <hr class="ornament"/>
-            <p>A heritage bookstore for readers who believe every home deserves a quiet shelf of stories.</p>
+            <p>Every Story Feels Like Home. A heritage bookstore for readers who believe every home deserves a quiet shelf of stories.</p>
         </div>
         <div>
             <h3>Explore</h3>
-            <p><a th:href="@{/books}">Book Collection</a></p>
-            <p><a th:href="@{/about}">Our Story</a></p>
-            <p><a th:href="@{/register}">Create Account</a></p>
+            <p><a th:href="@{/}">Home</a></p>
+            <p><a th:href="@{/books}">Collection</a></p>
+            <p><a th:href="@{/about}">About</a></p>
+            <p><a th:href="@{/login}">Sign In</a></p>
         </div>
         <div>
-            <h3>Visit</h3>
-            <p>Academic project · SE1020 OOP</p>
-            <p>SLIIT · Online Bookstore Management System</p>
+            <h3>Collections</h3>
+            <p><a th:href="@{/books(category='CAT-FICTION')}">Fiction</a></p>
+            <p><a th:href="@{/books(category='CAT-MYSTERY')}">Mystery</a></p>
+            <p><a th:href="@{/books(category='CAT-ROMANCE')}">Romance</a></p>
+            <p><a th:href="@{/books(category='CAT-HISTORY')}">History</a></p>
         </div>
     </div>
     <div class="container footer-bottom">
-        <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Family Books</span>
-        <span>Every Story Feels Like Home.</span>
+        <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Family Books · SE1020 OOP</span>
+        <span>Photography: Unsplash · Covers: original sample artwork</span>
     </div>
 </footer>
 

@@ -125,7 +125,7 @@ public abstract class Book {
 
     public void setCoverImage(String coverImage) {
         this.coverImage = (coverImage == null || coverImage.isBlank())
-                ? "/images/covers/placeholder.svg"
+                ? "/images/books/placeholder.jpg"
                 : coverImage.trim();
     }
 

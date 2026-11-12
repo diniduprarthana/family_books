@@ -13,7 +13,7 @@
         </div>
     </section>
 
-    <section class="section">
+    <section class="section section-ivory">
         <div class="container details-layout">
             <div class="details-cover">
                 <div class="book-cover">
@@ -22,20 +22,43 @@
             </div>
             <div>
                 <span class="pill" th:text="${book.bookType}">PRINTED</span>
-                <p class="book-price" style="font-size:1.7rem;margin-top:0.8rem;"
+                <p class="book-price" style="font-size:1.65rem;margin-top:.75rem;"
                    th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">Price</p>
                 <p th:text="${book.availabilityDescription}">Availability</p>
                 <p th:if="${averageRating > 0}"
-                   th:text="'Average rating: ' + ${#numbers.formatDecimal(averageRating, 1, 1)} + ' / 5'">Rating</p>
-                <hr class="ornament" style="margin-top:1.5rem;"/>
+                   th:text="'Average rating: ★ ' + ${#numbers.formatDecimal(averageRating, 1, 1)} + ' / 5'">Rating</p>
+                <hr class="ornament" style="margin-top:1.4rem;"/>
                 <p style="font-size:1.05rem;max-width:40rem;" th:text="${book.description}">Description</p>
                 <p class="book-meta">ISBN: <span th:text="${book.isbn}">isbn</span></p>
-                <a th:href="@{/books}" class="btn btn-dark" style="margin-top:1.4rem;">Back to collection</a>
+                <a th:href="@{/books}" class="btn btn-dark" style="margin-top:1.3rem;">Back to collection</a>
             </div>
         </div>
     </section>
 
-    <section class="section" style="padding-top:0;">
+    <section class="section section-parchment" style="padding-top:0;" th:if="${relatedBooks != null and !relatedBooks.isEmpty()}">
+        <div class="container">
+            <div class="section-head">
+                <p class="section-eyebrow">More in this mood</p>
+                <hr class="ornament"/>
+                <h2 class="section-title">Related titles</h2>
+            </div>
+            <div class="book-grid">
+                <article class="book-card" th:each="related : ${relatedBooks}">
+                    <a th:href="@{/books/{id}(id=${related.id})}">
+                        <div class="book-cover">
+                            <img th:src="${related.coverImage}" th:alt="${related.title}" loading="lazy"/>
+                        </div>
+                        <div class="book-body">
+                            <h3 th:text="${related.title}">Title</h3>
+                            <p class="book-meta" th:text="${related.author}">Author</p>
+                        </div>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-ivory" style="padding-top:1rem;">
         <div class="container" style="max-width:860px;">
             <div class="section-head">
                 <p class="section-eyebrow">Readers</p>
@@ -74,7 +97,7 @@
                 <span class="book-meta" th:text="' · ' + ${review.rating} + '/5 · ' + ${#temporals.format(review.createdAt, 'dd MMM yyyy')}">meta</span>
                 <p th:text="${review.reviewText}">text</p>
                 <div th:if="${currentUser != null and (currentUser.userId == review.userId or currentUser.role.name() == 'ADMIN')}"
-                     style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                     style="display:flex;gap:.5rem;flex-wrap:wrap;">
                     <form th:action="@{/reviews/{id}/update(id=${review.id})}" method="post" style="flex:1;min-width:240px;">
                         <input type="hidden" name="bookId" th:value="${book.id}"/>
                         <div class="form-group">

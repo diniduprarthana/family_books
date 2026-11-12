@@ -6,6 +6,7 @@
 <main class="site-main">
     <div class="auth-stage">
         <aside class="auth-visual">
+            <img src="/images/hero/library-warm.jpg" alt="Warm library shelves"/>
             <div>
                 <p class="section-eyebrow">Join the library</p>
                 <h2>Begin your shelf</h2>
@@ -15,7 +16,7 @@
         <div class="auth-form-wrap">
             <div class="form-panel" style="width:min(100%, 460px);">
                 <p class="section-eyebrow">Register</p>
-                <h1 style="margin-top:0;font-size:2.4rem;">Create Account</h1>
+                <h1 style="margin-top:0;font-size:2.35rem;">Create Account</h1>
                 <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
                 <form th:action="@{/register}" method="post">
                     <div class="form-group">
@@ -40,7 +41,7 @@
                     </div>
                     <button type="submit" class="btn btn-dark" style="width:100%;">Register</button>
                 </form>
-                <p style="margin-top:1.25rem;text-align:center;">
+                <p style="margin-top:1.2rem;text-align:center;">
                     Already a member? <a th:href="@{/login}" style="color:var(--walnut);text-decoration:underline;">Sign in</a>
                 </p>
             </div>

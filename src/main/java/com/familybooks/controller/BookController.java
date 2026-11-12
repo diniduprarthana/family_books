@@ -42,8 +42,13 @@ public class BookController {
                              @RequestParam(required = false, defaultValue = "title") String sort,
                              Model model) {
         List<Book> books = bookService.searchFilterSort(q, category, sort);
+        Map<String, Double> ratings = new HashMap<>();
+        for (Book book : books) {
+            ratings.put(book.getId(), reviewService.averageRating(book.getId()));
+        }
         model.addAttribute("books", books);
         model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("bookRatings", ratings);
         model.addAttribute("q", q);
         model.addAttribute("selectedCategory", category);
         model.addAttribute("sort", sort);
@@ -66,11 +71,17 @@ public class BookController {
             }
         }
 
+        List<Book> related = bookService.findByCategory(book.getCategoryId()).stream()
+                .filter(b -> !b.getId().equals(book.getId()))
+                .limit(4)
+                .toList();
+
         model.addAttribute("book", book);
         model.addAttribute("category", categoryService.getById(book.getCategoryId()));
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewerNames", reviewerNames);
         model.addAttribute("averageRating", reviewService.averageRating(id));
+        model.addAttribute("relatedBooks", related);
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("pageTitle", book.getTitle());
         return "books/details";
