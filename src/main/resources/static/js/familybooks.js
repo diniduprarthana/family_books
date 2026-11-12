@@ -17,6 +17,8 @@
         icon: "success",
         title: "Done",
         text: flashSuccess,
+        background: "#FAF6EE",
+        color: "#241914",
         confirmButtonColor: "#B69A70"
       });
     }
@@ -25,6 +27,8 @@
         icon: "error",
         title: "Notice",
         text: flashError,
+        background: "#FAF6EE",
+        color: "#241914",
         confirmButtonColor: "#493326"
       });
     }
@@ -45,6 +49,8 @@
         text: el.dataset.confirm || "Are you sure?",
         icon: "warning",
         showCancelButton: true,
+        background: "#FAF6EE",
+        color: "#241914",
         confirmButtonColor: "#7a2e24",
         cancelButtonColor: "#816957",
         confirmButtonText: "Yes, continue"
@@ -58,34 +64,56 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduceMotion && window.gsap) {
-    if (document.querySelector(".hero-animate")) {
-      gsap.from(".hero-animate > *", {
-        opacity: 0,
-        y: 28,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power2.out"
-      });
+    if (window.ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
     }
-    if (document.querySelector(".reveal")) {
+
+    const hero = document.querySelector(".hero-animate");
+    if (hero) {
+      gsap.fromTo(
+        ".hero-animate > *",
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.95,
+          stagger: 0.12,
+          ease: "power3.out",
+          clearProps: "opacity,transform"
+        }
+      );
+    }
+
+    if (window.ScrollTrigger) {
       gsap.utils.toArray(".reveal").forEach(function (section) {
-        gsap.from(section, {
+        const bits = section.querySelectorAll(".section-head, .book-card, .collection-tile, .feature-visual, blockquote");
+        if (!bits.length) {
+          return;
+        }
+        gsap.from(bits, {
           opacity: 0,
-          y: 36,
-          duration: 0.8,
+          y: 28,
+          duration: 0.75,
+          stagger: 0.06,
           ease: "power2.out",
-          scrollTrigger: section
+          scrollTrigger: {
+            trigger: section,
+            start: "top 82%"
+          }
         });
       });
     }
-    gsap.from(".book-card", {
-      opacity: 0,
-      y: 20,
-      duration: 0.55,
-      stagger: 0.06,
-      ease: "power1.out",
-      delay: 0.15
-    });
+
+    if (!document.querySelector(".hero")) {
+      gsap.from(".book-card", {
+        opacity: 0,
+        y: 22,
+        duration: 0.55,
+        stagger: 0.05,
+        ease: "power1.out",
+        delay: 0.1
+      });
+    }
   }
 
   const bookType = document.getElementById("bookType");

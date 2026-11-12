@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b1d15"/>
+      <stop offset="100%" stop-color="#6a513b"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx="0.7" cy="0.25" r="0.55">
+      <stop offset="0%" stop-color="#F1E7D5" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#241914" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#lamp)"/>
+  <rect x="80" y="120" width="420" height="28" fill="#4d3426"/>
+  <rect x="80" y="300" width="420" height="28" fill="#4d3426"/>
+  <rect x="80" y="480" width="420" height="28" fill="#4d3426"/>
+  <rect x="110" y="148" width="46" height="152" fill="#B69A70"/>
+  <rect x="168" y="160" width="38" height="140" fill="#7d5a3c"/>
+  <rect x="218" y="150" width="54" height="150" fill="#3f2a1e"/>
+  <rect x="284" y="168" width="40" height="132" fill="#9b7a55"/>
+  <rect x="336" y="152" width="60" height="148" fill="#5a4030"/>
+  <rect x="110" y="328" width="50" height="152" fill="#8a6646"/>
+  <rect x="172" y="340" width="42" height="140" fill="#493326"/>
+  <rect x="226" y="330" width="58" height="150" fill="#C2A77C"/>
+  <rect x="296" y="348" width="36" height="132" fill="#624434"/>
+  <rect x="700" y="430" width="320" height="220" rx="8" fill="#2a1c15" opacity="0.75"/>
+  <path d="M740 560 C820 500, 920 500, 980 560 L980 620 L740 620 Z" fill="#B69A70" opacity="0.35"/>
+  <circle cx="860" cy="250" r="70" fill="#F1E7D5" opacity="0.12"/>
+  <rect x="840" y="250" width="40" height="180" fill="#6e4d35"/>
+  <text x="760" y="780" fill="#F1E7D5" font-family="Georgia, serif" font-size="34" opacity="0.85">A quiet corner</text>
+  <text x="760" y="820" fill="#B69A70" font-family="Segoe UI, sans-serif" font-size="16" letter-spacing="4">FOR EVERY STORY</text>
+</svg>

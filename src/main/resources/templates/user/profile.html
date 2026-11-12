@@ -4,10 +4,16 @@
 <body class="site-shell"
       th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
 <header th:replace="~{layout :: navbar}"></header>
-<main class="site-main section">
+<main class="site-main">
+    <section class="page-banner">
+        <div class="container">
+            <p class="section-eyebrow">Account</p>
+            <h1>My Profile</h1>
+            <p>Manage your Family Books membership details.</p>
+        </div>
+    </section>
+    <section class="section-compact">
     <div class="container" style="max-width:720px;">
-        <p class="section-eyebrow">Account</p>
-        <h1 class="section-title">My Profile</h1>
 
         <div style="display:grid;gap:1.5rem;">
             <form th:action="@{/profile/update}" method="post" class="form-panel" style="max-width:none;">
@@ -52,6 +58,7 @@
             </form>
         </div>
     </div>
+    </section>
 </main>
 <footer th:replace="~{layout :: footer}"></footer>
 <div th:replace="~{layout :: scripts}"></div>

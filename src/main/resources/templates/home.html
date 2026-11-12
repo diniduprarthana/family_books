@@ -1,69 +1,81 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{layout :: head(${pageTitle})}"></head>
-<body class="site-shell"
+<body class="site-shell page-home"
       th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
 <header th:replace="~{layout :: navbar}"></header>
 
 <main class="site-main">
     <section class="hero">
-        <div class="container hero-grid">
-            <div class="hero-animate">
-                <p class="section-eyebrow">Heritage Bookstore</p>
+        <div class="container">
+            <div class="hero-content hero-animate">
+                <span class="hero-kicker">Heritage Bookstore</span>
                 <h1>Family Books</h1>
-                <p>Every Story Feels Like Home. Discover curated literature in a modern vintage sanctuary built for readers who love the quiet luxury of a well-kept shelf.</p>
+                <p class="hero-tagline">Every Story Feels Like Home.</p>
+                <p class="hero-copy">A modern vintage sanctuary for readers who love quiet shelves, warm light, and literature chosen with care.</p>
                 <div class="hero-actions">
                     <a th:href="@{/books}" class="btn btn-primary">Explore Collection</a>
                     <a th:href="@{/about}" class="btn btn-ghost">Our Story</a>
                 </div>
             </div>
-            <aside class="hero-panel hero-animate">
-                <strong>Curated for home</strong>
-                <p>Printed editions and digital keepsakes chosen with the warmth of a family library and the polish of a modern storefront.</p>
-            </aside>
         </div>
+        <div class="hero-scroll">Scroll</div>
     </section>
 
     <section class="section reveal">
         <div class="container">
-            <p class="section-eyebrow">Featured Books</p>
-            <h2 class="section-title">On the Front Table</h2>
-            <p class="section-lead">Handpicked titles from our current collection — fiction, essays, and quiet discoveries.</p>
-            <div class="book-grid">
-                <article class="book-card" th:each="book : ${featuredBooks}">
-                    <a th:href="@{/books/{id}(id=${book.id})}">
-                        <div class="book-cover">
-                            <img th:src="${book.coverImage}" th:alt="${book.title}"/>
-                        </div>
-                        <div class="book-body">
-                            <span class="pill" th:text="${book.bookType}">PRINTED</span>
-                            <h3 th:text="${book.title}">Title</h3>
-                            <p class="book-meta" th:text="${book.author}">Author</p>
-                            <p class="book-price" th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">LKR 0.00</p>
-                        </div>
-                    </a>
-                </article>
+            <div class="section-head">
+                <p class="section-eyebrow">Featured Books</p>
+                <hr class="ornament"/>
+                <h2 class="section-title">On the Front Table</h2>
+                <p class="section-lead">Handpicked titles arranged like a classic bookstore table — fiction, essays, and quiet discoveries.</p>
+            </div>
+            <div class="shelf-wrap">
+                <div class="book-grid">
+                    <article class="book-card" th:each="book : ${featuredBooks}">
+                        <a th:href="@{/books/{id}(id=${book.id})}">
+                            <div class="book-cover">
+                                <img th:src="${book.coverImage}" th:alt="${book.title}"/>
+                            </div>
+                            <div class="book-body">
+                                <span class="pill" th:text="${book.bookType}">PRINTED</span>
+                                <h3 th:text="${book.title}">Title</h3>
+                                <p class="book-meta" th:text="${book.author}">Author</p>
+                                <p class="book-price" th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">LKR 0.00</p>
+                            </div>
+                        </a>
+                    </article>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="section section-dark reveal">
         <div class="container">
-            <p class="section-eyebrow">Curated Collections</p>
-            <h2 class="section-title">Browse by Mood</h2>
-            <p class="section-lead">From rainy-day mysteries to family favourites for younger readers.</p>
-            <div class="chip-row">
-                <a class="chip" th:each="category : ${categories}"
-                   th:href="@{/books(category=${category.id})}"
-                   th:text="${category.name}">Fiction</a>
+            <div class="section-head">
+                <p class="section-eyebrow">Curated Collections</p>
+                <hr class="ornament"/>
+                <h2 class="section-title">Browse by Mood</h2>
+                <p class="section-lead">Step into rooms of reading — from rainy-day mysteries to family favourites.</p>
+            </div>
+            <div class="collection-mosaic">
+                <a class="collection-tile" th:each="category : ${categories}"
+                   th:href="@{/books(category=${category.id})}">
+                    <strong th:text="${category.name}">Fiction</strong>
+                    <span th:text="${category.description}">Stories</span>
+                </a>
             </div>
         </div>
     </section>
 
     <section class="section reveal">
         <div class="container">
-            <p class="section-eyebrow">Recently Added</p>
-            <h2 class="section-title">Fresh Arrivals</h2>
+            <div class="section-head">
+                <p class="section-eyebrow">Recently Added</p>
+                <hr class="ornament"/>
+                <h2 class="section-title">Fresh Arrivals</h2>
+                <p class="section-lead">New voices and returning classics, just placed on the shelf.</p>
+            </div>
             <div class="book-grid">
                 <article class="book-card" th:each="book : ${recentBooks}">
                     <a th:href="@{/books/{id}(id=${book.id})}">
@@ -80,18 +92,23 @@
         </div>
     </section>
 
-    <section class="section reveal" style="padding-top:0;">
+    <section class="quote-band reveal">
+        <div class="container">
+            <blockquote>“A bookstore that feels like coming home.”</blockquote>
+            <cite>Family Books</cite>
+        </div>
+    </section>
+
+    <section class="section reveal">
         <div class="container split-feature">
             <div>
                 <p class="section-eyebrow">About Family Books</p>
-                <h2 class="section-title">A bookstore that feels like coming home</h2>
-                <p class="section-lead">Family Books blends the atmosphere of a traditional literary shop with a clean, modern reading experience — crafted as a complete SE1020 academic system with real Java OOP, file storage, and four full CRUD modules.</p>
+                <hr class="ornament"/>
+                <h2 class="section-title">Where heritage warmth meets modern reading</h2>
+                <p class="section-lead">We designed Family Books to feel like a traditional literary shop — espresso wood, parchment light, and quiet luxury — while remaining a complete, viva-ready Java system.</p>
                 <a th:href="@{/about}" class="btn btn-dark">Read Our Story</a>
             </div>
-            <div class="hero-panel" style="background:var(--cream);color:var(--espresso);border-color:var(--line);">
-                <strong style="color:var(--walnut);">Design + substance</strong>
-                <p style="color:var(--muted);">Premium vintage interface on the surface. Clear Spring Boot architecture underneath — ready for viva demonstration.</p>
-            </div>
+            <div class="feature-visual" role="img" aria-label="Reading nook illustration"></div>
         </div>
     </section>
 </main>

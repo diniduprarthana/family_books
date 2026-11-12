@@ -4,27 +4,36 @@
 <body class="site-shell"
       th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
 <header th:replace="~{layout :: navbar}"></header>
-<main class="site-main section">
-    <div class="container">
-        <div class="form-panel">
-            <p class="section-eyebrow">Welcome back</p>
-            <h1 style="margin-top:0;">Sign In</h1>
-            <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
-            <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-            <form th:action="@{/login}" method="post">
-                <div class="form-group">
-                    <label for="username">Username or email</label>
-                    <input class="form-control" id="username" name="username" required autocomplete="username"/>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input class="form-control" type="password" id="password" name="password" required autocomplete="current-password"/>
-                </div>
-                <button type="submit" class="btn btn-dark" style="width:100%;">Sign In</button>
-            </form>
-            <p style="margin-top:1.25rem;text-align:center;">
-                New here? <a th:href="@{/register}" style="color:var(--walnut);text-decoration:underline;">Create an account</a>
-            </p>
+<main class="site-main">
+    <div class="auth-stage">
+        <aside class="auth-visual">
+            <div>
+                <p class="section-eyebrow">Welcome back</p>
+                <h2>Family Books</h2>
+                <p>Return to your shelf. Every story feels like home.</p>
+            </div>
+        </aside>
+        <div class="auth-form-wrap">
+            <div class="form-panel" style="width:min(100%, 440px);">
+                <p class="section-eyebrow">Sign in</p>
+                <h1 style="margin-top:0;font-size:2.4rem;">Enter the library</h1>
+                <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+                <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                <form th:action="@{/login}" method="post">
+                    <div class="form-group">
+                        <label for="username">Username or email</label>
+                        <input class="form-control" id="username" name="username" required autocomplete="username"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" required autocomplete="current-password"/>
+                    </div>
+                    <button type="submit" class="btn btn-dark" style="width:100%;">Sign In</button>
+                </form>
+                <p style="margin-top:1.25rem;text-align:center;">
+                    New here? <a th:href="@{/register}" style="color:var(--walnut);text-decoration:underline;">Create an account</a>
+                </p>
+            </div>
         </div>
     </div>
 </main>

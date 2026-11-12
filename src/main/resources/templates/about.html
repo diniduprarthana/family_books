@@ -4,20 +4,37 @@
 <body class="site-shell">
 <header th:replace="~{layout :: navbar}"></header>
 <main class="site-main">
-    <section class="section section-dark" style="padding-top:5rem;">
+    <section class="page-banner">
         <div class="container">
             <p class="section-eyebrow">Our Story</p>
-            <h1 class="section-title" style="color:var(--parchment);">Family Books</h1>
-            <p class="section-lead">Every Story Feels Like Home.</p>
+            <h1>Family Books</h1>
+            <p>Every Story Feels Like Home.</p>
         </div>
     </section>
+
+    <section class="section">
+        <div class="container split-feature">
+            <div>
+                <hr class="ornament"/>
+                <h2 class="section-title">A heritage reading room for the digital age</h2>
+                <p class="section-lead">Family Books was imagined as the kind of bookstore you remember from childhood visits — warm wood, quiet corners, and covers that invite you to stay a little longer.</p>
+                <p>This online system carries that atmosphere into a polished web experience while remaining academically rigorous for SE1020 Object Oriented Programming at SLIIT.</p>
+            </div>
+            <div class="feature-visual" role="img" aria-label="Reading nook"></div>
+        </div>
+    </section>
+
+    <section class="quote-band">
+        <div class="container">
+            <blockquote>“Premium vintage design on the surface. Clear Java architecture underneath.”</blockquote>
+            <cite>Built for viva confidence</cite>
+        </div>
+    </section>
+
     <section class="section">
         <div class="container" style="max-width:760px;">
-            <h2>A heritage reading room for the digital age</h2>
-            <p>Family Books was imagined as the kind of bookstore you remember from childhood visits with parents — warm wood, quiet corners, and covers that invite you to stay a little longer. This online system carries that atmosphere into a polished web experience while remaining academically rigorous.</p>
-            <p>Built for SE1020 Object Oriented Programming at SLIIT, the platform demonstrates encapsulation, inheritance, polymorphism, abstraction, and information hiding through a clean Spring Boot architecture with text-file persistence.</p>
-            <h3>What you can do here</h3>
-            <ul>
+            <h2 class="section-title">What you can do here</h2>
+            <ul style="color:var(--muted);font-size:1.05rem;line-height:1.9;">
                 <li>Browse a curated collection of printed books and e-books</li>
                 <li>Register securely and manage your profile</li>
                 <li>Leave thoughtful reviews on titles you love</li>

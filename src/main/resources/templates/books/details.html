@@ -4,84 +4,100 @@
 <body class="site-shell"
       th:attr="data-flash-success=${successMessage}, data-flash-error=${errorMessage}">
 <header th:replace="~{layout :: navbar}"></header>
-<main class="site-main section">
-    <div class="container details-layout">
-        <div class="book-cover" style="border:1px solid var(--line);">
-            <img th:src="${book.coverImage}" th:alt="${book.title}"/>
+<main class="site-main">
+    <section class="page-banner">
+        <div class="container">
+            <p class="section-eyebrow" th:text="${category.name}">Category</p>
+            <h1 th:text="${book.title}">Title</h1>
+            <p th:text="'by ' + ${book.author}">Author</p>
         </div>
-        <div>
-            <span class="pill" th:text="${book.bookType}">PRINTED</span>
-            <h1 class="section-title" th:text="${book.title}">Title</h1>
-            <p class="book-meta" th:text="'by ' + ${book.author}">Author</p>
-            <p class="book-meta" th:text="${category.name}">Category</p>
-            <p class="book-price" style="font-size:1.4rem;"
-               th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">Price</p>
-            <p th:text="${book.availabilityDescription}">Availability</p>
-            <p th:if="${averageRating > 0}"
-               th:text="'Average rating: ' + ${#numbers.formatDecimal(averageRating, 1, 1)} + ' / 5'">Rating</p>
-            <p style="margin-top:1.5rem;" th:text="${book.description}">Description</p>
-            <p class="book-meta">ISBN: <span th:text="${book.isbn}">isbn</span></p>
-            <a th:href="@{/books}" class="btn btn-outline" style="margin-top:1rem;color:var(--espresso);">Back to collection</a>
-        </div>
-    </div>
+    </section>
 
-    <div class="container" style="margin-top:3rem;max-width:860px;">
-        <h2>Reader Reviews</h2>
-
-        <div sec:authorize="isAuthenticated()" style="margin:1.5rem 0;padding:1.25rem;border:1px solid var(--line);background:var(--cream);">
-            <h3 style="margin-top:0;">Write a review</h3>
-            <form th:action="@{/reviews}" method="post">
-                <input type="hidden" name="bookId" th:value="${book.id}"/>
-                <div class="form-group">
-                    <label for="rating">Rating</label>
-                    <select class="form-control" id="rating" name="rating" required>
-                        <option value="5">5 — Excellent</option>
-                        <option value="4">4 — Very good</option>
-                        <option value="3">3 — Good</option>
-                        <option value="2">2 — Fair</option>
-                        <option value="1">1 — Poor</option>
-                    </select>
+    <section class="section">
+        <div class="container details-layout">
+            <div class="details-cover">
+                <div class="book-cover">
+                    <img th:src="${book.coverImage}" th:alt="${book.title}"/>
                 </div>
-                <div class="form-group">
-                    <label for="reviewText">Your thoughts</label>
-                    <textarea class="form-control" id="reviewText" name="reviewText" rows="4" required minlength="10"></textarea>
-                </div>
-                <button type="submit" class="btn btn-dark">Submit review</button>
-            </form>
+            </div>
+            <div>
+                <span class="pill" th:text="${book.bookType}">PRINTED</span>
+                <p class="book-price" style="font-size:1.7rem;margin-top:0.8rem;"
+                   th:text="'LKR ' + ${#numbers.formatDecimal(book.price, 1, 2)}">Price</p>
+                <p th:text="${book.availabilityDescription}">Availability</p>
+                <p th:if="${averageRating > 0}"
+                   th:text="'Average rating: ' + ${#numbers.formatDecimal(averageRating, 1, 1)} + ' / 5'">Rating</p>
+                <hr class="ornament" style="margin-top:1.5rem;"/>
+                <p style="font-size:1.05rem;max-width:40rem;" th:text="${book.description}">Description</p>
+                <p class="book-meta">ISBN: <span th:text="${book.isbn}">isbn</span></p>
+                <a th:href="@{/books}" class="btn btn-dark" style="margin-top:1.4rem;">Back to collection</a>
+            </div>
         </div>
-        <p sec:authorize="!isAuthenticated()" class="alert">
-            <a th:href="@{/login}">Sign in</a> to leave a review.
-        </p>
+    </section>
 
-        <div th:if="${reviews.isEmpty()}" class="alert">No reviews yet. Be the first to share your thoughts.</div>
-        <article class="review-card" th:each="review : ${reviews}">
-            <strong th:text="${reviewerNames.get(review.userId)}">Reader</strong>
-            <span class="book-meta" th:text="' · ' + ${review.rating} + '/5 · ' + ${#temporals.format(review.createdAt, 'dd MMM yyyy')}">meta</span>
-            <p th:text="${review.reviewText}">text</p>
-            <div th:if="${currentUser != null and (currentUser.userId == review.userId or currentUser.role.name() == 'ADMIN')}"
-                 style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-                <form th:action="@{/reviews/{id}/update(id=${review.id})}" method="post" style="flex:1;min-width:240px;">
+    <section class="section" style="padding-top:0;">
+        <div class="container" style="max-width:860px;">
+            <div class="section-head">
+                <p class="section-eyebrow">Readers</p>
+                <hr class="ornament"/>
+                <h2 class="section-title">Reviews</h2>
+            </div>
+
+            <div sec:authorize="isAuthenticated()" class="review-composer">
+                <h3 style="margin-top:0;">Write a review</h3>
+                <form th:action="@{/reviews}" method="post">
                     <input type="hidden" name="bookId" th:value="${book.id}"/>
                     <div class="form-group">
-                        <label>Edit rating</label>
-                        <select class="form-control" name="rating">
-                            <option th:each="i : ${#numbers.sequence(1,5)}" th:value="${i}"
-                                    th:selected="${i == review.rating}" th:text="${i}"></option>
+                        <label for="rating">Rating</label>
+                        <select class="form-control" id="rating" name="rating" required>
+                            <option value="5">5 — Excellent</option>
+                            <option value="4">4 — Very good</option>
+                            <option value="3">3 — Good</option>
+                            <option value="2">2 — Fair</option>
+                            <option value="1">1 — Poor</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Edit text</label>
-                        <textarea class="form-control" name="reviewText" rows="3" th:text="${review.reviewText}"></textarea>
+                        <label for="reviewText">Your thoughts</label>
+                        <textarea class="form-control" id="reviewText" name="reviewText" rows="4" required minlength="10"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-sm btn-dark">Save</button>
-                </form>
-                <form th:action="@{/reviews/{id}/delete(id=${review.id})}" method="post">
-                    <input type="hidden" name="bookId" th:value="${book.id}"/>
-                    <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this review?">Delete</button>
+                    <button type="submit" class="btn btn-dark">Submit review</button>
                 </form>
             </div>
-        </article>
-    </div>
+            <p sec:authorize="!isAuthenticated()" class="alert">
+                <a th:href="@{/login}">Sign in</a> to leave a review.
+            </p>
+
+            <div th:if="${reviews.isEmpty()}" class="alert">No reviews yet. Be the first to share your thoughts.</div>
+            <article class="review-card" th:each="review : ${reviews}">
+                <strong th:text="${reviewerNames.get(review.userId)}">Reader</strong>
+                <span class="book-meta" th:text="' · ' + ${review.rating} + '/5 · ' + ${#temporals.format(review.createdAt, 'dd MMM yyyy')}">meta</span>
+                <p th:text="${review.reviewText}">text</p>
+                <div th:if="${currentUser != null and (currentUser.userId == review.userId or currentUser.role.name() == 'ADMIN')}"
+                     style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                    <form th:action="@{/reviews/{id}/update(id=${review.id})}" method="post" style="flex:1;min-width:240px;">
+                        <input type="hidden" name="bookId" th:value="${book.id}"/>
+                        <div class="form-group">
+                            <label>Edit rating</label>
+                            <select class="form-control" name="rating">
+                                <option th:each="i : ${#numbers.sequence(1,5)}" th:value="${i}"
+                                        th:selected="${i == review.rating}" th:text="${i}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Edit text</label>
+                            <textarea class="form-control" name="reviewText" rows="3" th:text="${review.reviewText}"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-dark">Save</button>
+                    </form>
+                    <form th:action="@{/reviews/{id}/delete(id=${review.id})}" method="post">
+                        <input type="hidden" name="bookId" th:value="${book.id}"/>
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this review?">Delete</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    </section>
 </main>
 <footer th:replace="~{layout :: footer}"></footer>
 <div th:replace="~{layout :: scripts}"></div>
