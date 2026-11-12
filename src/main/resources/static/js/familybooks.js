@@ -1,12 +1,25 @@
 (function () {
   const navToggle = document.getElementById("navToggle");
-  const navLinks = document.getElementById("navLinks");
-  if (navToggle && navLinks) {
+  const navPanel = document.getElementById("navPanel");
+  if (navToggle && navPanel) {
     navToggle.addEventListener("click", function () {
-      navLinks.classList.toggle("open");
-      const expanded = navLinks.classList.contains("open");
+      navPanel.classList.toggle("open");
+      const expanded = navPanel.classList.contains("open");
       navToggle.setAttribute("aria-expanded", expanded ? "true" : "false");
     });
+  }
+
+  const siteNav = document.querySelector(".site-nav");
+  if (siteNav && document.body.classList.contains("page-home")) {
+    const syncNav = function () {
+      if (window.scrollY > 40) {
+        siteNav.classList.add("is-solid");
+      } else {
+        siteNav.classList.remove("is-solid");
+      }
+    };
+    syncNav();
+    window.addEventListener("scroll", syncNav, { passive: true });
   }
 
   const flashSuccess = document.body.dataset.flashSuccess;
